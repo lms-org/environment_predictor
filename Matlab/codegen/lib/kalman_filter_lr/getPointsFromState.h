@@ -5,7 +5,7 @@
 // File: getPointsFromState.h
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 19:08:02
+// C/C++ source code generated on  : 06-Oct-2015 19:14:10
 //
 #ifndef __GETPOINTSFROMSTATE_H__
 #define __GETPOINTSFROMSTATE_H__

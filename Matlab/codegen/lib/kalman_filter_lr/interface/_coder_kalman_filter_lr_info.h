@@ -5,7 +5,7 @@
  * File: _coder_kalman_filter_lr_info.h 
  *  
  * MATLAB Coder version            : 3.0 
- * C/C++ source code generated on  : 06-Oct-2015 19:08:02 
+ * C/C++ source code generated on  : 06-Oct-2015 19:14:10 
  */
 
 #ifndef ___CODER_KALMAN_FILTER_LR_INFO_H__

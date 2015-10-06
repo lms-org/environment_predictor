@@ -7,10 +7,8 @@
 #include "lms/imaging/warp.h"
 #include "street_environment/road.h"
 #include "cmath"
-extern "C"{
+
 #include "kalman_filter_lr.h"
-#include "projectPoints.h"
-}
 bool EnvironmentPredictor::initialize() {
     envInput = datamanager()->readChannel<street_environment::EnvironmentObjects>(this,"ENVIRONMENT_INPUT");
 
@@ -125,7 +123,7 @@ bool EnvironmentPredictor::cycle() {
     logger.debug("deltapos: ") << deltaX << " "<<deltaY << " "<<deltaPhi;
     kalman_filter_lr(zustandsVector,deltaX,deltaY,deltaPhi,kovarianzMatrixDesZustandes,
                      kovarianzMatrixDesZustandUebergangs,
-                     r_fakt,partLength,lx,ly,rx,ry,mx,my);
+                     r_fakt,partLength,lx,ly,rx,ry,mx,my,1);
 
     createOutput();
     //destroy stuff

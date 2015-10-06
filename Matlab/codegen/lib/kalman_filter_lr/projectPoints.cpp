@@ -5,7 +5,7 @@
 // File: projectPoints.cpp
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 18:59:00
+// C/C++ source code generated on  : 06-Oct-2015 19:08:02
 //
 
 // Include Files
@@ -33,30 +33,30 @@ void projectPoints(const emxArray_real_T *r, double delta, double dist,
 {
   emxArray_real_T *x;
   emxArray_real_T *y;
-  int i0;
+  int i1;
   int loop_ub;
   double vx;
   double vy;
   double betr;
   int z;
   double b_x;
-  emxInit_real_T(&x, 1);
-  emxInit_real_T(&y, 1);
+  emxInit_real_T1(&x, 1);
+  emxInit_real_T1(&y, 1);
   getPointsFromState(r, delta, x, y, phi);
-  i0 = xp->size[0];
+  i1 = xp->size[0];
   xp->size[0] = r->size[0];
-  emxEnsureCapacity((emxArray__common *)xp, i0, (int)sizeof(double));
+  emxEnsureCapacity((emxArray__common *)xp, i1, (int)sizeof(double));
   loop_ub = r->size[0];
-  for (i0 = 0; i0 < loop_ub; i0++) {
-    xp->data[i0] = 0.0;
+  for (i1 = 0; i1 < loop_ub; i1++) {
+    xp->data[i1] = 0.0;
   }
 
-  i0 = yp->size[0];
+  i1 = yp->size[0];
   yp->size[0] = r->size[0];
-  emxEnsureCapacity((emxArray__common *)yp, i0, (int)sizeof(double));
+  emxEnsureCapacity((emxArray__common *)yp, i1, (int)sizeof(double));
   loop_ub = r->size[0];
-  for (i0 = 0; i0 < loop_ub; i0++) {
-    yp->data[i0] = 0.0;
+  for (i1 = 0; i1 < loop_ub; i1++) {
+    yp->data[i1] = 0.0;
   }
 
   // % Projektion

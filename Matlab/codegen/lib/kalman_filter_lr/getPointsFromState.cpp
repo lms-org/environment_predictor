@@ -5,7 +5,7 @@
 // File: getPointsFromState.cpp
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 18:59:00
+// C/C++ source code generated on  : 06-Oct-2015 19:08:02
 //
 
 // Include Files
@@ -28,18 +28,18 @@ void getPointsFromState(const emxArray_real_T *r, double delta, emxArray_real_T 
   X, emxArray_real_T *Y, emxArray_real_T *PHI)
 {
   emxArray_real_T *P;
-  int i1;
+  int i2;
   int loop_ub;
   double phi;
   int s;
-  emxInit_real_T1(&P, 2);
-  i1 = P->size[0] * P->size[1];
+  emxInit_real_T(&P, 2);
+  i2 = P->size[0] * P->size[1];
   P->size[0] = r->size[0];
   P->size[1] = 3;
-  emxEnsureCapacity((emxArray__common *)P, i1, (int)sizeof(double));
+  emxEnsureCapacity((emxArray__common *)P, i2, (int)sizeof(double));
   loop_ub = r->size[0] * 3;
-  for (i1 = 0; i1 < loop_ub; i1++) {
-    P->data[i1] = 0.0;
+  for (i2 = 0; i2 < loop_ub; i2++) {
+    P->data[i2] = 0.0;
   }
 
   // x, y, phi
@@ -63,27 +63,27 @@ void getPointsFromState(const emxArray_real_T *r, double delta, emxArray_real_T 
   }
 
   loop_ub = P->size[0];
-  i1 = X->size[0];
+  i2 = X->size[0];
   X->size[0] = loop_ub;
-  emxEnsureCapacity((emxArray__common *)X, i1, (int)sizeof(double));
-  for (i1 = 0; i1 < loop_ub; i1++) {
-    X->data[i1] = P->data[i1];
+  emxEnsureCapacity((emxArray__common *)X, i2, (int)sizeof(double));
+  for (i2 = 0; i2 < loop_ub; i2++) {
+    X->data[i2] = P->data[i2];
   }
 
   loop_ub = P->size[0];
-  i1 = Y->size[0];
+  i2 = Y->size[0];
   Y->size[0] = loop_ub;
-  emxEnsureCapacity((emxArray__common *)Y, i1, (int)sizeof(double));
-  for (i1 = 0; i1 < loop_ub; i1++) {
-    Y->data[i1] = P->data[i1 + P->size[0]];
+  emxEnsureCapacity((emxArray__common *)Y, i2, (int)sizeof(double));
+  for (i2 = 0; i2 < loop_ub; i2++) {
+    Y->data[i2] = P->data[i2 + P->size[0]];
   }
 
   loop_ub = P->size[0];
-  i1 = PHI->size[0];
+  i2 = PHI->size[0];
   PHI->size[0] = loop_ub;
-  emxEnsureCapacity((emxArray__common *)PHI, i1, (int)sizeof(double));
-  for (i1 = 0; i1 < loop_ub; i1++) {
-    PHI->data[i1] = P->data[i1 + (P->size[0] << 1)];
+  emxEnsureCapacity((emxArray__common *)PHI, i2, (int)sizeof(double));
+  for (i2 = 0; i2 < loop_ub; i2++) {
+    PHI->data[i2] = P->data[i2 + (P->size[0] << 1)];
   }
 
   emxFree_real_T(&P);

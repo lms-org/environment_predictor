@@ -5,7 +5,7 @@
 // File: getPointsFromState.cpp
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 19:08:02
+// C/C++ source code generated on  : 06-Oct-2015 19:14:10
 //
 
 // Include Files
@@ -56,7 +56,7 @@ void getPointsFromState(const emxArray_real_T *r, double delta, emxArray_real_T 
   P->data[1 + (P->size[0] << 1)] = r->data[1];
   for (s = 2; s - 2 <= r->size[0] - 3; s++) {
     //  "-" wegen VZ-Definition der Kruemmung
-    phi = (phi + 2.0 * acos(-delta * r->data[s] / 2.0)) - 3.1415926535897931;
+    phi = (phi - 2.0 * acos(-delta * r->data[s] / 2.0)) - 3.1415926535897931;
     P->data[s] = P->data[s - 1] + delta * cos(phi);
     P->data[s + P->size[0]] = P->data[(s + P->size[0]) - 1] + delta * sin(phi);
     P->data[s + (P->size[0] << 1)] = phi;

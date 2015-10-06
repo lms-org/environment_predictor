@@ -5,7 +5,7 @@
 // File: messmatrix.h
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 19:08:02
+// C/C++ source code generated on  : 06-Oct-2015 19:14:10
 //
 #ifndef __MESSMATRIX_H__
 #define __MESSMATRIX_H__

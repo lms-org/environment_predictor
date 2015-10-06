@@ -5,7 +5,7 @@
  * File: _coder_kalman_filter_lr_api.h
  *
  * MATLAB Coder version            : 3.0
- * C/C++ source code generated on  : 06-Oct-2015 18:59:00
+ * C/C++ source code generated on  : 06-Oct-2015 19:08:02
  */
 
 #ifndef ___CODER_KALMAN_FILTER_LR_API_H__
@@ -46,11 +46,12 @@ extern emlrtCTX emlrtRootTLSGlobal;
 extern emlrtContext emlrtContextGlobal;
 
 /* Function Declarations */
-extern void kalman_filter_lr(emxArray_real_T *r, real_T A, emxArray_real_T *Pk,
-  emxArray_real_T *Q, real_T R_fakt, real_T delta, emxArray_real_T *xl,
-  emxArray_real_T *yl, emxArray_real_T *xr, emxArray_real_T *yr, emxArray_real_T
-  *xm, emxArray_real_T *ym);
-extern void kalman_filter_lr_api(const mxArray *prhs[12], const mxArray *plhs[2]);
+extern void kalman_filter_lr(emxArray_real_T *r, real_T delta_x, real_T delta_y,
+  real_T delta_phi, emxArray_real_T *Pk, emxArray_real_T *Q, real_T R_fakt,
+  real_T delta, emxArray_real_T *xl, emxArray_real_T *yl, emxArray_real_T *xr,
+  emxArray_real_T *yr, emxArray_real_T *xm, emxArray_real_T *ym, uint8_T
+  interp_mode);
+extern void kalman_filter_lr_api(const mxArray *prhs[15], const mxArray *plhs[2]);
 extern void kalman_filter_lr_atexit(void);
 extern void kalman_filter_lr_initialize(void);
 extern void kalman_filter_lr_terminate(void);

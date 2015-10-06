@@ -5,7 +5,7 @@
 // File: mrdivide.cpp
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 18:59:00
+// C/C++ source code generated on  : 06-Oct-2015 19:08:02
 //
 
 // Include Files
@@ -42,12 +42,12 @@ void mrdivide(const emxArray_real_T *A, const emxArray_real_T *B,
   int rankR;
   double tol;
   int mn;
-  emxInit_real_T1(&Y, 2);
-  emxInit_real_T1(&b_B, 2);
-  emxInit_real_T1(&b_A, 2);
-  emxInit_real_T(&tau, 1);
+  emxInit_real_T(&Y, 2);
+  emxInit_real_T(&b_B, 2);
+  emxInit_real_T(&b_A, 2);
+  emxInit_real_T1(&tau, 1);
   emxInit_int32_T(&jpvt, 2);
-  emxInit_real_T1(&c_B, 2);
+  emxInit_real_T(&c_B, 2);
   if ((A->size[0] == 0) || (A->size[1] == 0) || ((B->size[0] == 0) || (B->size[1]
         == 0))) {
     unnamed_idx_0 = (unsigned int)A->size[0];

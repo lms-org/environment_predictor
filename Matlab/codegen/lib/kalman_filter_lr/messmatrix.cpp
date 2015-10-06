@@ -5,7 +5,7 @@
 // File: messmatrix.cpp
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 18:59:00
+// C/C++ source code generated on  : 06-Oct-2015 19:08:02
 //
 
 // Include Files
@@ -39,7 +39,7 @@ void messmatrix(const emxArray_real_T *P, const emxArray_real_T *r, double delta
   int c;
   unsigned int count;
   int i;
-  emxInit_real_T1(&d_phi0, 2);
+  emxInit_real_T(&d_phi0, 2);
   num_points = r->size[0] - 3;
 
   // Ableitungen nach phi0
@@ -63,7 +63,7 @@ void messmatrix(const emxArray_real_T *P, const emxArray_real_T *r, double delta
     // y-Komponenten
   }
 
-  emxInit_real_T1(&d_c_x, 2);
+  emxInit_real_T(&d_c_x, 2);
 
   // Ableitungen nach den Krümmungen c_i
   i3 = d_c_x->size[0] * d_c_x->size[1];
@@ -75,7 +75,7 @@ void messmatrix(const emxArray_real_T *P, const emxArray_real_T *r, double delta
     d_c_x->data[i3] = 0.0;
   }
 
-  emxInit_real_T1(&d_c_y, 2);
+  emxInit_real_T(&d_c_y, 2);
 
   // x-Komponenten
   i3 = d_c_y->size[0] * d_c_y->size[1];

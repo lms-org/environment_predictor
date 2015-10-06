@@ -187,7 +187,7 @@ void EnvironmentPredictor::convertZustandToLane(street_environment::RoadLane &ou
     for(int i = 2; i < partCount; i++){
         lms::math::vertex2f pi;
         double dw = 2*acos(partLength*zustandsVector->data[i]/2);
-        phi = phi -dw-M_PI;
+        phi = phi -dw+M_PI;
         pi.x = output.points()[i-1].x + partLength*cos(phi);
         pi.y = output.points()[i-1].y + partLength*sin(phi);
         output.points().push_back(pi);

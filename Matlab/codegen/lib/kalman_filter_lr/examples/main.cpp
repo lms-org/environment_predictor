@@ -5,7 +5,7 @@
 // File: main.cpp
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 18:41:52
+// C/C++ source code generated on  : 06-Oct-2015 18:59:00
 //
 
 //***********************************************************************
@@ -43,7 +43,6 @@
 // Function Declarations
 static emxArray_real_T *argInit_Unboundedx1_real_T();
 static double argInit_real_T();
-static unsigned char argInit_uint8_T();
 static emxArray_real_T *c_argInit_UnboundedxUnbounded_r();
 static void main_kalman_filter_lr();
 
@@ -85,15 +84,6 @@ static double argInit_real_T()
 
 //
 // Arguments    : void
-// Return Type  : unsigned char
-//
-static unsigned char argInit_uint8_T()
-{
-  return 0;
-}
-
-//
-// Arguments    : void
 // Return Type  : emxArray_real_T *
 //
 static emxArray_real_T *c_argInit_UnboundedxUnbounded_r()
@@ -127,9 +117,7 @@ static emxArray_real_T *c_argInit_UnboundedxUnbounded_r()
 static void main_kalman_filter_lr()
 {
   emxArray_real_T *r;
-  double delta_x;
-  double delta_y;
-  double delta_phi;
+  double A;
   emxArray_real_T *Pk;
   emxArray_real_T *Q;
   double R_fakt;
@@ -144,9 +132,7 @@ static void main_kalman_filter_lr()
   // Initialize function 'kalman_filter_lr' input arguments.
   // Initialize function input argument 'r'.
   r = argInit_Unboundedx1_real_T();
-  delta_x = argInit_real_T();
-  delta_y = argInit_real_T();
-  delta_phi = argInit_real_T();
+  A = argInit_real_T();
 
   // Initialize function input argument 'Pk'.
   Pk = c_argInit_UnboundedxUnbounded_r();
@@ -175,8 +161,7 @@ static void main_kalman_filter_lr()
   ym = argInit_Unboundedx1_real_T();
 
   // Call the entry-point 'kalman_filter_lr'.
-  kalman_filter_lr(r, delta_x, delta_y, delta_phi, Pk, Q, R_fakt, delta, xl, yl,
-                   xr, yr, xm, ym, argInit_uint8_T());
+  kalman_filter_lr(r, A, Pk, Q, R_fakt, delta, xl, yl, xr, yr, xm, ym);
   emxDestroyArray_real_T(ym);
   emxDestroyArray_real_T(xm);
   emxDestroyArray_real_T(yr);

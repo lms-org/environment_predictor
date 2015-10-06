@@ -5,7 +5,7 @@
  * File: _coder_kalman_filter_lr_api.c
  *
  * MATLAB Coder version            : 3.0
- * C/C++ source code generated on  : 06-Oct-2015 18:41:52
+ * C/C++ source code generated on  : 06-Oct-2015 18:59:00
  */
 
 /* Include Files */
@@ -23,8 +23,8 @@ emlrtContext emlrtContextGlobal = { true, false, 131419U, NULL,
 static void b_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u, const
   emlrtMsgIdentifier *parentId, emxArray_real_T *y);
 static void b_emlrt_marshallOut(const emxArray_real_T *u, const mxArray *y);
-static real_T c_emlrt_marshallIn(const emlrtStack *sp, const mxArray *delta_x,
-  const char_T *identifier);
+static real_T c_emlrt_marshallIn(const emlrtStack *sp, const mxArray *A, const
+  char_T *identifier);
 static real_T d_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u, const
   emlrtMsgIdentifier *parentId);
 static void e_emlrt_marshallIn(const emlrtStack *sp, const mxArray *Pk, const
@@ -39,18 +39,12 @@ static void emxInit_real_T1(const emlrtStack *sp, emxArray_real_T **pEmxArray,
   int32_T numDimensions, boolean_T doPush);
 static void f_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u, const
   emlrtMsgIdentifier *parentId, emxArray_real_T *y);
-static uint8_T g_emlrt_marshallIn(const emlrtStack *sp, const mxArray
-  *interp_mode, const char_T *identifier);
-static uint8_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u, const
-  emlrtMsgIdentifier *parentId);
+static void g_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
+  emlrtMsgIdentifier *msgId, emxArray_real_T *ret);
+static real_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
+  emlrtMsgIdentifier *msgId);
 static void i_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
   emlrtMsgIdentifier *msgId, emxArray_real_T *ret);
-static real_T j_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
-  emlrtMsgIdentifier *msgId);
-static void k_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
-  emlrtMsgIdentifier *msgId, emxArray_real_T *ret);
-static uint8_T l_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
-  const emlrtMsgIdentifier *msgId);
 
 /* Function Definitions */
 
@@ -64,7 +58,7 @@ static uint8_T l_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
 static void b_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u, const
   emlrtMsgIdentifier *parentId, emxArray_real_T *y)
 {
-  i_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
+  g_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
   emlrtDestroyArray(&u);
 }
 
@@ -81,20 +75,20 @@ static void b_emlrt_marshallOut(const emxArray_real_T *u, const mxArray *y)
 
 /*
  * Arguments    : const emlrtStack *sp
- *                const mxArray *delta_x
+ *                const mxArray *A
  *                const char_T *identifier
  * Return Type  : real_T
  */
-static real_T c_emlrt_marshallIn(const emlrtStack *sp, const mxArray *delta_x,
-  const char_T *identifier)
+static real_T c_emlrt_marshallIn(const emlrtStack *sp, const mxArray *A, const
+  char_T *identifier)
 {
   real_T y;
   emlrtMsgIdentifier thisId;
   thisId.fIdentifier = identifier;
   thisId.fParent = NULL;
   thisId.bParentIsCell = false;
-  y = d_emlrt_marshallIn(sp, emlrtAlias(delta_x), &thisId);
-  emlrtDestroyArray(&delta_x);
+  y = d_emlrt_marshallIn(sp, emlrtAlias(A), &thisId);
+  emlrtDestroyArray(&A);
   return y;
 }
 
@@ -108,7 +102,7 @@ static real_T d_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u, const
   emlrtMsgIdentifier *parentId)
 {
   real_T y;
-  y = j_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
+  y = h_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
   emlrtDestroyArray(&u);
   return y;
 }
@@ -247,42 +241,8 @@ static void emxInit_real_T1(const emlrtStack *sp, emxArray_real_T **pEmxArray,
 static void f_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u, const
   emlrtMsgIdentifier *parentId, emxArray_real_T *y)
 {
-  k_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
+  i_emlrt_marshallIn(sp, emlrtAlias(u), parentId, y);
   emlrtDestroyArray(&u);
-}
-
-/*
- * Arguments    : const emlrtStack *sp
- *                const mxArray *interp_mode
- *                const char_T *identifier
- * Return Type  : uint8_T
- */
-static uint8_T g_emlrt_marshallIn(const emlrtStack *sp, const mxArray
-  *interp_mode, const char_T *identifier)
-{
-  uint8_T y;
-  emlrtMsgIdentifier thisId;
-  thisId.fIdentifier = identifier;
-  thisId.fParent = NULL;
-  thisId.bParentIsCell = false;
-  y = h_emlrt_marshallIn(sp, emlrtAlias(interp_mode), &thisId);
-  emlrtDestroyArray(&interp_mode);
-  return y;
-}
-
-/*
- * Arguments    : const emlrtStack *sp
- *                const mxArray *u
- *                const emlrtMsgIdentifier *parentId
- * Return Type  : uint8_T
- */
-static uint8_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u, const
-  emlrtMsgIdentifier *parentId)
-{
-  uint8_T y;
-  y = l_emlrt_marshallIn(sp, emlrtAlias(u), parentId);
-  emlrtDestroyArray(&u);
-  return y;
 }
 
 /*
@@ -292,7 +252,7 @@ static uint8_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u, const
  *                emxArray_real_T *ret
  * Return Type  : void
  */
-static void i_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
+static void g_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
   emlrtMsgIdentifier *msgId, emxArray_real_T *ret)
 {
   int32_T iv0[1];
@@ -315,7 +275,7 @@ static void i_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
  *                const emlrtMsgIdentifier *msgId
  * Return Type  : real_T
  */
-static real_T j_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
+static real_T h_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
   emlrtMsgIdentifier *msgId)
 {
   real_T ret;
@@ -333,7 +293,7 @@ static real_T j_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
  *                emxArray_real_T *ret
  * Return Type  : void
  */
-static void k_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
+static void i_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
   emlrtMsgIdentifier *msgId, emxArray_real_T *ret)
 {
   int32_T iv1[2];
@@ -352,28 +312,11 @@ static void k_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src, const
 }
 
 /*
- * Arguments    : const emlrtStack *sp
- *                const mxArray *src
- *                const emlrtMsgIdentifier *msgId
- * Return Type  : uint8_T
- */
-static uint8_T l_emlrt_marshallIn(const emlrtStack *sp, const mxArray *src,
-  const emlrtMsgIdentifier *msgId)
-{
-  uint8_T ret;
-  static const int32_T dims = 0;
-  emlrtCheckBuiltInR2012b(sp, msgId, src, "uint8", false, 0U, &dims);
-  ret = *(uint8_T *)mxGetData(src);
-  emlrtDestroyArray(&src);
-  return ret;
-}
-
-/*
- * Arguments    : const mxArray *prhs[15]
+ * Arguments    : const mxArray *prhs[12]
  *                const mxArray *plhs[2]
  * Return Type  : void
  */
-void kalman_filter_lr_api(const mxArray *prhs[15], const mxArray *plhs[2])
+void kalman_filter_lr_api(const mxArray *prhs[12], const mxArray *plhs[2])
 {
   emxArray_real_T *r;
   emxArray_real_T *Pk;
@@ -384,12 +327,9 @@ void kalman_filter_lr_api(const mxArray *prhs[15], const mxArray *plhs[2])
   emxArray_real_T *yr;
   emxArray_real_T *xm;
   emxArray_real_T *ym;
-  real_T delta_x;
-  real_T delta_y;
-  real_T delta_phi;
+  real_T A;
   real_T R_fakt;
   real_T delta;
-  uint8_T interp_mode;
   emlrtStack st = { NULL, NULL, NULL };
 
   st.tls = emlrtRootTLSGlobal;
@@ -404,41 +344,37 @@ void kalman_filter_lr_api(const mxArray *prhs[15], const mxArray *plhs[2])
   emxInit_real_T(&st, &xm, 1, true);
   emxInit_real_T(&st, &ym, 1, true);
   prhs[0] = emlrtProtectR2012b(prhs[0], 0, true, -1);
-  prhs[4] = emlrtProtectR2012b(prhs[4], 4, true, -1);
-  prhs[5] = emlrtProtectR2012b(prhs[5], 5, false, -1);
+  prhs[2] = emlrtProtectR2012b(prhs[2], 2, true, -1);
+  prhs[3] = emlrtProtectR2012b(prhs[3], 3, false, -1);
+  prhs[6] = emlrtProtectR2012b(prhs[6], 6, false, -1);
+  prhs[7] = emlrtProtectR2012b(prhs[7], 7, false, -1);
   prhs[8] = emlrtProtectR2012b(prhs[8], 8, false, -1);
   prhs[9] = emlrtProtectR2012b(prhs[9], 9, false, -1);
   prhs[10] = emlrtProtectR2012b(prhs[10], 10, false, -1);
   prhs[11] = emlrtProtectR2012b(prhs[11], 11, false, -1);
-  prhs[12] = emlrtProtectR2012b(prhs[12], 12, false, -1);
-  prhs[13] = emlrtProtectR2012b(prhs[13], 13, false, -1);
 
   /* Marshall function inputs */
   emlrt_marshallIn(&st, emlrtAlias(prhs[0]), "r", r);
-  delta_x = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[1]), "delta_x");
-  delta_y = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[2]), "delta_y");
-  delta_phi = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[3]), "delta_phi");
-  e_emlrt_marshallIn(&st, emlrtAlias(prhs[4]), "Pk", Pk);
-  e_emlrt_marshallIn(&st, emlrtAlias(prhs[5]), "Q", Q);
-  R_fakt = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[6]), "R_fakt");
-  delta = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[7]), "delta");
-  emlrt_marshallIn(&st, emlrtAlias(prhs[8]), "xl", xl);
-  emlrt_marshallIn(&st, emlrtAlias(prhs[9]), "yl", yl);
-  emlrt_marshallIn(&st, emlrtAlias(prhs[10]), "xr", xr);
-  emlrt_marshallIn(&st, emlrtAlias(prhs[11]), "yr", yr);
-  emlrt_marshallIn(&st, emlrtAlias(prhs[12]), "xm", xm);
-  emlrt_marshallIn(&st, emlrtAlias(prhs[13]), "ym", ym);
-  interp_mode = g_emlrt_marshallIn(&st, emlrtAliasP(prhs[14]), "interp_mode");
+  A = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[1]), "A");
+  e_emlrt_marshallIn(&st, emlrtAlias(prhs[2]), "Pk", Pk);
+  e_emlrt_marshallIn(&st, emlrtAlias(prhs[3]), "Q", Q);
+  R_fakt = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[4]), "R_fakt");
+  delta = c_emlrt_marshallIn(&st, emlrtAliasP(prhs[5]), "delta");
+  emlrt_marshallIn(&st, emlrtAlias(prhs[6]), "xl", xl);
+  emlrt_marshallIn(&st, emlrtAlias(prhs[7]), "yl", yl);
+  emlrt_marshallIn(&st, emlrtAlias(prhs[8]), "xr", xr);
+  emlrt_marshallIn(&st, emlrtAlias(prhs[9]), "yr", yr);
+  emlrt_marshallIn(&st, emlrtAlias(prhs[10]), "xm", xm);
+  emlrt_marshallIn(&st, emlrtAlias(prhs[11]), "ym", ym);
 
   /* Invoke the target function */
-  kalman_filter_lr(r, delta_x, delta_y, delta_phi, Pk, Q, R_fakt, delta, xl, yl,
-                   xr, yr, xm, ym, interp_mode);
+  kalman_filter_lr(r, A, Pk, Q, R_fakt, delta, xl, yl, xr, yr, xm, ym);
 
   /* Marshall function outputs */
   emlrt_marshallOut(r, prhs[0]);
   plhs[0] = prhs[0];
-  b_emlrt_marshallOut(Pk, prhs[4]);
-  plhs[1] = prhs[4];
+  b_emlrt_marshallOut(Pk, prhs[2]);
+  plhs[1] = prhs[2];
   ym->canFreeData = false;
   emxFree_real_T(&ym);
   xm->canFreeData = false;

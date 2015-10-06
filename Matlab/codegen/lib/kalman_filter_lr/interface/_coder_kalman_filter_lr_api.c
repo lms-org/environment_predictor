@@ -5,7 +5,7 @@
  * File: _coder_kalman_filter_lr_api.c
  *
  * MATLAB Coder version            : 3.0
- * C/C++ source code generated on  : 06-Oct-2015 19:14:10
+ * C/C++ source code generated on  : 06-Oct-2015 21:36:32
  */
 
 /* Include Files */

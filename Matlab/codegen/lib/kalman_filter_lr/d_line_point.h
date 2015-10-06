@@ -2,13 +2,13 @@
 // Academic License - for use in teaching, academic research, and meeting
 // course requirements at degree granting institutions only.  Not for
 // government, commercial, or other organizational use.
-// File: state_transition.h
+// File: d_line_point.h
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 18:41:52
+// C/C++ source code generated on  : 06-Oct-2015 18:59:00
 //
-#ifndef __STATE_TRANSITION_H__
-#define __STATE_TRANSITION_H__
+#ifndef __D_LINE_POINT_H__
+#define __D_LINE_POINT_H__
 
 // Include Files
 #include <math.h>
@@ -20,14 +20,13 @@
 #include "kalman_filter_lr_types.h"
 
 // Function Declarations
-extern void state_transition(emxArray_real_T *r, double delta, double delta_x,
-  double delta_y, double delta_phi, unsigned char interp_mode, emxArray_real_T
-  *A);
+extern void d_line_point(const double P[2], const double Q[2], const double M[2],
+  double *d, double *lambda, double S[2]);
 
 #endif
 
 //
-// File trailer for state_transition.h
+// File trailer for d_line_point.h
 //
 // [EOF]
 //

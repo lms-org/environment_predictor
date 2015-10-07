@@ -5,7 +5,7 @@
 // File: messmatrix.cpp
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 21:36:32
+// C/C++ source code generated on  : 07-Oct-2015 12:34:33
 //
 
 // Include Files
@@ -125,23 +125,16 @@ void messmatrix(const emxArray_real_T *P, const emxArray_real_T *r, double delta
       d_phi0->size[0]) - 1];
     for (c = 0; c < (int)(ind->data[i] + -2.0); c++) {
       // Ableitung nach Krümmungen c
-      //          if c==ind(i)
-      //              H(count, c)   = d_c_x(ind(i)-1, c-1) - lambda(i)*d^2*sin(P(ind(i), 3))/sqrt(1-d^2*r(c-1)^2/4); 
-      //              H(count+1, c) = d_c_y(ind(i)-1, c-1) + lambda(i)*d^2*cos(P(ind(i), 3))/sqrt(1-d^2*r(c-1)^2/4); 
-      //          else
-      //              H(count, c)   = d_c_x(ind(i), c-1);
-      //              H(count+1, c) = d_c_y(ind(i), c-1);
-      //          end
       if (3.0 + (double)c == ind->data[i]) {
         H->data[((int)count + H->size[0] * (c + 2)) - 2] = d_c_x->data[((int)
           ind->data[i] + d_c_x->size[0] * ((int)((3.0 + (double)c) - 1.0) - 1))
-          - 1] - lambda->data[i] * (delta * delta) * sin(P->data[((int)
+          - 1] + lambda->data[i] * (delta * delta) * sin(P->data[((int)
           (ind->data[i] + 1.0) + (P->size[0] << 1)) - 1]) / sqrt(1.0 - delta *
           delta * (r->data[(int)((3.0 + (double)c) - 1.0) - 1] * r->data[(int)
                    ((3.0 + (double)c) - 1.0) - 1]) / 4.0);
         H->data[((int)count + H->size[0] * (c + 2)) - 1] = d_c_y->data[((int)
           ind->data[i] + d_c_y->size[0] * ((int)((3.0 + (double)c) - 1.0) - 1))
-          - 1] + lambda->data[i] * (delta * delta) * cos(P->data[((int)
+          - 1] - lambda->data[i] * (delta * delta) * cos(P->data[((int)
           (ind->data[i] + 1.0) + (P->size[0] << 1)) - 1]) / sqrt(1.0 - delta *
           delta * (r->data[(int)((3.0 + (double)c) - 1.0) - 1] * r->data[(int)
                    ((3.0 + (double)c) - 1.0) - 1]) / 4.0);

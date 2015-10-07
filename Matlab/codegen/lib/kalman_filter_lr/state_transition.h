@@ -5,7 +5,7 @@
 // File: state_transition.h
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 19:14:10
+// C/C++ source code generated on  : 06-Oct-2015 21:36:32
 //
 #ifndef __STATE_TRANSITION_H__
 #define __STATE_TRANSITION_H__

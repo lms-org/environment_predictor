@@ -5,7 +5,7 @@
 // File: kalman_filter_lr_emxAPI.h
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 19:14:10
+// C/C++ source code generated on  : 06-Oct-2015 21:36:32
 //
 #ifndef __KALMAN_FILTER_LR_EMXAPI_H__
 #define __KALMAN_FILTER_LR_EMXAPI_H__

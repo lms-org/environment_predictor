@@ -5,7 +5,7 @@
 // File: messmatrix.cpp
 //
 // MATLAB Coder version            : 3.0
-// C/C++ source code generated on  : 06-Oct-2015 19:14:10
+// C/C++ source code generated on  : 06-Oct-2015 21:36:32
 //
 
 // Include Files
@@ -31,7 +31,7 @@ void messmatrix(const emxArray_real_T *P, const emxArray_real_T *r, double delta
 {
   emxArray_real_T *d_phi0;
   int num_points;
-  int i3;
+  int i2;
   int loop_ub;
   int p;
   emxArray_real_T *d_c_x;
@@ -43,13 +43,13 @@ void messmatrix(const emxArray_real_T *P, const emxArray_real_T *r, double delta
   num_points = r->size[0] - 3;
 
   // Ableitungen nach phi0
-  i3 = d_phi0->size[0] * d_phi0->size[1];
+  i2 = d_phi0->size[0] * d_phi0->size[1];
   d_phi0->size[0] = r->size[0];
   d_phi0->size[1] = 2;
-  emxEnsureCapacity((emxArray__common *)d_phi0, i3, (int)sizeof(double));
+  emxEnsureCapacity((emxArray__common *)d_phi0, i2, (int)sizeof(double));
   loop_ub = r->size[0] << 1;
-  for (i3 = 0; i3 < loop_ub; i3++) {
-    d_phi0->data[i3] = 0.0;
+  for (i2 = 0; i2 < loop_ub; i2++) {
+    d_phi0->data[i2] = 0.0;
   }
 
   for (p = 1; p - 1 <= num_points + 1; p++) {
@@ -66,25 +66,25 @@ void messmatrix(const emxArray_real_T *P, const emxArray_real_T *r, double delta
   emxInit_real_T(&d_c_x, 2);
 
   // Ableitungen nach den Krümmungen c_i
-  i3 = d_c_x->size[0] * d_c_x->size[1];
+  i2 = d_c_x->size[0] * d_c_x->size[1];
   d_c_x->size[0] = r->size[0];
   d_c_x->size[1] = r->size[0];
-  emxEnsureCapacity((emxArray__common *)d_c_x, i3, (int)sizeof(double));
+  emxEnsureCapacity((emxArray__common *)d_c_x, i2, (int)sizeof(double));
   loop_ub = r->size[0] * r->size[0];
-  for (i3 = 0; i3 < loop_ub; i3++) {
-    d_c_x->data[i3] = 0.0;
+  for (i2 = 0; i2 < loop_ub; i2++) {
+    d_c_x->data[i2] = 0.0;
   }
 
   emxInit_real_T(&d_c_y, 2);
 
   // x-Komponenten
-  i3 = d_c_y->size[0] * d_c_y->size[1];
+  i2 = d_c_y->size[0] * d_c_y->size[1];
   d_c_y->size[0] = r->size[0];
   d_c_y->size[1] = r->size[0];
-  emxEnsureCapacity((emxArray__common *)d_c_y, i3, (int)sizeof(double));
+  emxEnsureCapacity((emxArray__common *)d_c_y, i2, (int)sizeof(double));
   loop_ub = r->size[0] * r->size[0];
-  for (i3 = 0; i3 < loop_ub; i3++) {
-    d_c_y->data[i3] = 0.0;
+  for (i2 = 0; i2 < loop_ub; i2++) {
+    d_c_y->data[i2] = 0.0;
   }
 
   // y-Komponenten
@@ -102,13 +102,13 @@ void messmatrix(const emxArray_real_T *P, const emxArray_real_T *r, double delta
   }
 
   // Messmatrix zusammensetzen
-  i3 = H->size[0] * H->size[1];
+  i2 = H->size[0] * H->size[1];
   H->size[0] = (int)(2.0 * (double)lambda->size[0]);
   H->size[1] = r->size[0];
-  emxEnsureCapacity((emxArray__common *)H, i3, (int)sizeof(double));
+  emxEnsureCapacity((emxArray__common *)H, i2, (int)sizeof(double));
   loop_ub = (int)(2.0 * (double)lambda->size[0]) * r->size[0];
-  for (i3 = 0; i3 < loop_ub; i3++) {
-    H->data[i3] = 0.0;
+  for (i2 = 0; i2 < loop_ub; i2++) {
+    H->data[i2] = 0.0;
   }
 
   count = 2U;

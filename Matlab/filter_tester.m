@@ -50,7 +50,7 @@ for i = 1:100
     
     [X, Y, PHI] = getPointsFromState(r, delta);
     plot(X,Y,'-o')
-    axis equal
+    axis ([0 1.2 -0.6 0.6])
     
     pause(0.05)
     

@@ -17,7 +17,7 @@
 <a name="5"><font color="#888888 "><i>    5   </i></font></a><font color="#117755"><i>// File: messmatrix.cpp</i></font>
 <a name="6"><font color="#888888 "><i>    6   </i></font></a><font color="#117755"><i>//</i></font>
 <a name="7"><font color="#888888 "><i>    7   </i></font></a><font color="#117755"><i>// MATLAB Coder version            : 3.0</i></font>
-<a name="8"><font color="#888888 "><i>    8   </i></font></a><font color="#117755"><i>// C/C++ source code generated on  : 06-Oct-2015 21:36:32</i></font>
+<a name="8"><font color="#888888 "><i>    8   </i></font></a><font color="#117755"><i>// C/C++ source code generated on  : 07-Oct-2015 12:34:33</i></font>
 <a name="9"><font color="#888888 "><i>    9   </i></font></a><font color="#117755"><i>//</i></font>
 <a name="10"><font color="#888888 "><i>   10   </i></font></a>
 <a name="11"><font color="#888888 "><i>   11   </i></font></a><font color="#117755"><i>// Include Files</i></font>
@@ -137,50 +137,43 @@
 <a name="125"><font color="#888888 "><i>  125   </i></font></a>      d_phi0-&gt;size[0]) - 1];
 <a name="126"><font color="#888888 "><i>  126   </i></font></a>    <font color="#112266"><b>for</b></font> (c = 0; c &lt; (<font color="#112266"><b>int</b></font>)(ind-&gt;data[i] + -2.0); c++) <b>{</b>
 <a name="127"><font color="#888888 "><i>  127   </i></font></a>      <font color="#117755"><i>// Ableitung nach Krümmungen c</i></font>
-<a name="128"><font color="#888888 "><i>  128   </i></font></a>      <font color="#117755"><i>//          if c==ind(i)</i></font>
-<a name="129"><font color="#888888 "><i>  129   </i></font></a>      <font color="#117755"><i>//              H(count, c)   = d_c_x(ind(i)-1, c-1) - lambda(i)*d^2*sin(P(ind(i), 3))/sqrt(1-d^2*r(c-1)^2/4); </i></font>
-<a name="130"><font color="#888888 "><i>  130   </i></font></a>      <font color="#117755"><i>//              H(count+1, c) = d_c_y(ind(i)-1, c-1) + lambda(i)*d^2*cos(P(ind(i), 3))/sqrt(1-d^2*r(c-1)^2/4); </i></font>
-<a name="131"><font color="#888888 "><i>  131   </i></font></a>      <font color="#117755"><i>//          else</i></font>
-<a name="132"><font color="#888888 "><i>  132   </i></font></a>      <font color="#117755"><i>//              H(count, c)   = d_c_x(ind(i), c-1);</i></font>
-<a name="133"><font color="#888888 "><i>  133   </i></font></a>      <font color="#117755"><i>//              H(count+1, c) = d_c_y(ind(i), c-1);</i></font>
-<a name="134"><font color="#888888 "><i>  134   </i></font></a>      <font color="#117755"><i>//          end</i></font>
-<a name="135"><font color="#888888 "><i>  135   </i></font></a>      <font color="#112266"><b>if</b></font> (3.0 + (<font color="#112266"><b>double</b></font>)c == ind-&gt;data[i]) <b>{</b>
-<a name="136"><font color="#888888 "><i>  136   </i></font></a>        H-&gt;data[((<font color="#112266"><b>int</b></font>)count + H-&gt;size[0] * (c + 2)) - 2] = d_c_x-&gt;data[((<font color="#112266"><b>int</b></font>)
-<a name="137"><font color="#888888 "><i>  137   </i></font></a>          ind-&gt;data[i] + d_c_x-&gt;size[0] * ((<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1))
-<a name="138"><font color="#888888 "><i>  138   </i></font></a>          - 1] - lambda-&gt;data[i] * (delta * delta) * sin(P-&gt;data[((<font color="#112266"><b>int</b></font>)
-<a name="139"><font color="#888888 "><i>  139   </i></font></a>          (ind-&gt;data[i] + 1.0) + (P-&gt;size[0] &lt;&lt; 1)) - 1]) / sqrt(1.0 - delta *
-<a name="140"><font color="#888888 "><i>  140   </i></font></a>          delta * (r-&gt;data[(<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1] * r-&gt;data[(<font color="#112266"><b>int</b></font>)
-<a name="141"><font color="#888888 "><i>  141   </i></font></a>                   ((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1]) / 4.0);
-<a name="142"><font color="#888888 "><i>  142   </i></font></a>        H-&gt;data[((<font color="#112266"><b>int</b></font>)count + H-&gt;size[0] * (c + 2)) - 1] = d_c_y-&gt;data[((<font color="#112266"><b>int</b></font>)
-<a name="143"><font color="#888888 "><i>  143   </i></font></a>          ind-&gt;data[i] + d_c_y-&gt;size[0] * ((<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1))
-<a name="144"><font color="#888888 "><i>  144   </i></font></a>          - 1] + lambda-&gt;data[i] * (delta * delta) * cos(P-&gt;data[((<font color="#112266"><b>int</b></font>)
-<a name="145"><font color="#888888 "><i>  145   </i></font></a>          (ind-&gt;data[i] + 1.0) + (P-&gt;size[0] &lt;&lt; 1)) - 1]) / sqrt(1.0 - delta *
-<a name="146"><font color="#888888 "><i>  146   </i></font></a>          delta * (r-&gt;data[(<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1] * r-&gt;data[(<font color="#112266"><b>int</b></font>)
-<a name="147"><font color="#888888 "><i>  147   </i></font></a>                   ((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1]) / 4.0);
-<a name="148"><font color="#888888 "><i>  148   </i></font></a>      <b>}</b> <font color="#112266"><b>else</b></font> <b>{</b>
-<a name="149"><font color="#888888 "><i>  149   </i></font></a>        H-&gt;data[((<font color="#112266"><b>int</b></font>)count + H-&gt;size[0] * (c + 2)) - 2] = d_c_x-&gt;data[((<font color="#112266"><b>int</b></font>)
-<a name="150"><font color="#888888 "><i>  150   </i></font></a>          ind-&gt;data[i] + d_c_x-&gt;size[0] * ((<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1))
-<a name="151"><font color="#888888 "><i>  151   </i></font></a>          - 1];
-<a name="152"><font color="#888888 "><i>  152   </i></font></a>        H-&gt;data[((<font color="#112266"><b>int</b></font>)count + H-&gt;size[0] * (c + 2)) - 1] = d_c_y-&gt;data[((<font color="#112266"><b>int</b></font>)
-<a name="153"><font color="#888888 "><i>  153   </i></font></a>          ind-&gt;data[i] + d_c_y-&gt;size[0] * ((<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1))
-<a name="154"><font color="#888888 "><i>  154   </i></font></a>          - 1];
-<a name="155"><font color="#888888 "><i>  155   </i></font></a>      <b>}</b>
-<a name="156"><font color="#888888 "><i>  156   </i></font></a>    <b>}</b>
-<a name="157"><font color="#888888 "><i>  157   </i></font></a>
-<a name="158"><font color="#888888 "><i>  158   </i></font></a>    count += 2U;
-<a name="159"><font color="#888888 "><i>  159   </i></font></a>  <b>}</b>
-<a name="160"><font color="#888888 "><i>  160   </i></font></a>
-<a name="161"><font color="#888888 "><i>  161   </i></font></a>  <a href="kalman_filter_lr_emxutil_cpp.html#fcn_emxFree_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_emxFree_real_T');" target="_self"><font color="#1122aa">emxFree_real_T</font></a>(&amp;d_c_y);
-<a name="162"><font color="#888888 "><i>  162   </i></font></a>  <a href="kalman_filter_lr_emxutil_cpp.html#fcn_emxFree_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_emxFree_real_T');" target="_self"><font color="#1122aa">emxFree_real_T</font></a>(&amp;d_c_x);
-<a name="163"><font color="#888888 "><i>  163   </i></font></a>  <a href="kalman_filter_lr_emxutil_cpp.html#fcn_emxFree_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_emxFree_real_T');" target="_self"><font color="#1122aa">emxFree_real_T</font></a>(&amp;d_phi0);
-<a name="164"><font color="#888888 "><i>  164   </i></font></a><b>}</b>
-<a name="165"><font color="#888888 "><i>  165   </i></font></a>
-<a name="166"><font color="#888888 "><i>  166   </i></font></a><font color="#117755"><i>//</i></font>
-<a name="167"><font color="#888888 "><i>  167   </i></font></a><font color="#117755"><i>// File trailer for messmatrix.cpp</i></font>
-<a name="168"><font color="#888888 "><i>  168   </i></font></a><font color="#117755"><i>//</i></font>
-<a name="169"><font color="#888888 "><i>  169   </i></font></a><font color="#117755"><i>// [EOF]</i></font>
-<a name="170"><font color="#888888 "><i>  170   </i></font></a><font color="#117755"><i>//</i></font>
-<a name="171"><font color="#888888 "><i>  171   </i></font></a></pre>
+<a name="128"><font color="#888888 "><i>  128   </i></font></a>      <font color="#112266"><b>if</b></font> (3.0 + (<font color="#112266"><b>double</b></font>)c == ind-&gt;data[i]) <b>{</b>
+<a name="129"><font color="#888888 "><i>  129   </i></font></a>        H-&gt;data[((<font color="#112266"><b>int</b></font>)count + H-&gt;size[0] * (c + 2)) - 2] = d_c_x-&gt;data[((<font color="#112266"><b>int</b></font>)
+<a name="130"><font color="#888888 "><i>  130   </i></font></a>          ind-&gt;data[i] + d_c_x-&gt;size[0] * ((<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1))
+<a name="131"><font color="#888888 "><i>  131   </i></font></a>          - 1] + lambda-&gt;data[i] * (delta * delta) * sin(P-&gt;data[((<font color="#112266"><b>int</b></font>)
+<a name="132"><font color="#888888 "><i>  132   </i></font></a>          (ind-&gt;data[i] + 1.0) + (P-&gt;size[0] &lt;&lt; 1)) - 1]) / sqrt(1.0 - delta *
+<a name="133"><font color="#888888 "><i>  133   </i></font></a>          delta * (r-&gt;data[(<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1] * r-&gt;data[(<font color="#112266"><b>int</b></font>)
+<a name="134"><font color="#888888 "><i>  134   </i></font></a>                   ((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1]) / 4.0);
+<a name="135"><font color="#888888 "><i>  135   </i></font></a>        H-&gt;data[((<font color="#112266"><b>int</b></font>)count + H-&gt;size[0] * (c + 2)) - 1] = d_c_y-&gt;data[((<font color="#112266"><b>int</b></font>)
+<a name="136"><font color="#888888 "><i>  136   </i></font></a>          ind-&gt;data[i] + d_c_y-&gt;size[0] * ((<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1))
+<a name="137"><font color="#888888 "><i>  137   </i></font></a>          - 1] - lambda-&gt;data[i] * (delta * delta) * cos(P-&gt;data[((<font color="#112266"><b>int</b></font>)
+<a name="138"><font color="#888888 "><i>  138   </i></font></a>          (ind-&gt;data[i] + 1.0) + (P-&gt;size[0] &lt;&lt; 1)) - 1]) / sqrt(1.0 - delta *
+<a name="139"><font color="#888888 "><i>  139   </i></font></a>          delta * (r-&gt;data[(<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1] * r-&gt;data[(<font color="#112266"><b>int</b></font>)
+<a name="140"><font color="#888888 "><i>  140   </i></font></a>                   ((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1]) / 4.0);
+<a name="141"><font color="#888888 "><i>  141   </i></font></a>      <b>}</b> <font color="#112266"><b>else</b></font> <b>{</b>
+<a name="142"><font color="#888888 "><i>  142   </i></font></a>        H-&gt;data[((<font color="#112266"><b>int</b></font>)count + H-&gt;size[0] * (c + 2)) - 2] = d_c_x-&gt;data[((<font color="#112266"><b>int</b></font>)
+<a name="143"><font color="#888888 "><i>  143   </i></font></a>          ind-&gt;data[i] + d_c_x-&gt;size[0] * ((<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1))
+<a name="144"><font color="#888888 "><i>  144   </i></font></a>          - 1];
+<a name="145"><font color="#888888 "><i>  145   </i></font></a>        H-&gt;data[((<font color="#112266"><b>int</b></font>)count + H-&gt;size[0] * (c + 2)) - 1] = d_c_y-&gt;data[((<font color="#112266"><b>int</b></font>)
+<a name="146"><font color="#888888 "><i>  146   </i></font></a>          ind-&gt;data[i] + d_c_y-&gt;size[0] * ((<font color="#112266"><b>int</b></font>)((3.0 + (<font color="#112266"><b>double</b></font>)c) - 1.0) - 1))
+<a name="147"><font color="#888888 "><i>  147   </i></font></a>          - 1];
+<a name="148"><font color="#888888 "><i>  148   </i></font></a>      <b>}</b>
+<a name="149"><font color="#888888 "><i>  149   </i></font></a>    <b>}</b>
+<a name="150"><font color="#888888 "><i>  150   </i></font></a>
+<a name="151"><font color="#888888 "><i>  151   </i></font></a>    count += 2U;
+<a name="152"><font color="#888888 "><i>  152   </i></font></a>  <b>}</b>
+<a name="153"><font color="#888888 "><i>  153   </i></font></a>
+<a name="154"><font color="#888888 "><i>  154   </i></font></a>  <a href="kalman_filter_lr_emxutil_cpp.html#fcn_emxFree_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_emxFree_real_T');" target="_self"><font color="#1122aa">emxFree_real_T</font></a>(&amp;d_c_y);
+<a name="155"><font color="#888888 "><i>  155   </i></font></a>  <a href="kalman_filter_lr_emxutil_cpp.html#fcn_emxFree_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_emxFree_real_T');" target="_self"><font color="#1122aa">emxFree_real_T</font></a>(&amp;d_c_x);
+<a name="156"><font color="#888888 "><i>  156   </i></font></a>  <a href="kalman_filter_lr_emxutil_cpp.html#fcn_emxFree_real_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_emxFree_real_T');" target="_self"><font color="#1122aa">emxFree_real_T</font></a>(&amp;d_phi0);
+<a name="157"><font color="#888888 "><i>  157   </i></font></a><b>}</b>
+<a name="158"><font color="#888888 "><i>  158   </i></font></a>
+<a name="159"><font color="#888888 "><i>  159   </i></font></a><font color="#117755"><i>//</i></font>
+<a name="160"><font color="#888888 "><i>  160   </i></font></a><font color="#117755"><i>// File trailer for messmatrix.cpp</i></font>
+<a name="161"><font color="#888888 "><i>  161   </i></font></a><font color="#117755"><i>//</i></font>
+<a name="162"><font color="#888888 "><i>  162   </i></font></a><font color="#117755"><i>// [EOF]</i></font>
+<a name="163"><font color="#888888 "><i>  163   </i></font></a><font color="#117755"><i>//</i></font>
+<a name="164"><font color="#888888 "><i>  164   </i></font></a></pre>
 </td></tr></table>
 </p>
 </body>

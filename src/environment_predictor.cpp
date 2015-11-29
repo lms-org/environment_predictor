@@ -13,20 +13,19 @@ bool EnvironmentPredictor::initialize() {
     envInput = datamanager()->readChannel<street_environment::EnvironmentObjects>(this,"ENVIRONMENT_INPUT");
 
     roadOutput = datamanager()->writeChannel<street_environment::RoadLane>(this,"ROAD_OUTPUT");
-    car = datamanager()->writeChannel<sensor_utils::Car>(this,"CAR");
-    config = getConfig();
+    car = datamanager()->readChannel<sensor_utils::Car>(this,"CAR");
 
-    partCount = config->get<int>("elementCount",10);
-    partLength = config->get<float>("elementLength",0.2);
+    partCount = config().get<int>("elementCount",10);
+    partLength = config().get<float>("elementLength",0.2);
     zustandsVector = emxCreate_real_T(partCount,1);
 
     stateTransitionMatrix = emxCreate_real_T(partCount,partCount);
     kovarianzMatrixDesZustandes = emxCreate_real_T(partCount,partCount);
     kovarianzMatrixDesZustandUebergangs = emxCreate_real_T(partCount,partCount);
     cycleCounter = 0;
-    if(config->get<bool>("logState", false))
+    if(config().get<bool>("logState", false))
     {
-        logFile.open(config->get<std::string>("logPrefix") + "_" + lms::extra::currentTimeString() + "_kalman.csv", std::ofstream::out);
+        logFile.open(config().get<std::string>("logPrefix") + "_" + lms::extra::currentTimeString() + "_kalman.csv", std::ofstream::out);
     }
     
     resetData();
@@ -39,14 +38,14 @@ bool EnvironmentPredictor::initialize() {
 void EnvironmentPredictor::resetData(){
     logger.error("resetData");
     clearMatrix(zustandsVector);
-    zustandsVector->data[0] = getConfig()->get<float>("distanceToMiddle",0.2);
+    zustandsVector->data[0] = config().get<float>("distanceToMiddle",0.2);
     asEinheitsMatrix(stateTransitionMatrix);
     asEinheitsMatrix(kovarianzMatrixDesZustandes);
     clearMatrix(kovarianzMatrixDesZustandUebergangs);
 
     for(int x = 0; x < partCount; x++){
         for(int y = 0; y < partCount; y++){
-            kovarianzMatrixDesZustandUebergangs->data[y*partCount+x]=config->get<float>("kov",15)*(1-pow(config->get<float>("kovAbnahme",0.2),1/fabs(x-y)));
+            kovarianzMatrixDesZustandUebergangs->data[y*partCount+x]=config().get<float>("kov",15)*(1-pow(config().get<float>("kovAbnahme",0.2),1/fabs(x-y)));
         }
     }
 }
@@ -57,13 +56,13 @@ bool EnvironmentPredictor::deinitialize() {
 
 bool EnvironmentPredictor::cycle() {
 
-    //TODO I don't like it hmmm
+    //I don't like it hmmm
     for(std::string content : messaging()->receive("RC_STATE_CHANGED")){
         resetData();
         logger.info("cycle")<<"RC_STATE_CHANGED";
     }
 
-    r_fakt=config->get<double>("r_fakt",20);
+    r_fakt=config().get<double>("r_fakt",20);
 
     //länge der später zu berechnenden Abschnitten
     //convert data to lines
@@ -120,11 +119,9 @@ bool EnvironmentPredictor::cycle() {
         deltaPhi = car->deltaPhi();
     }
     */
-    logger.debug("deltapos: ") << deltaX << " "<<deltaY << " "<<deltaPhi;
     kalman_filter_lr(zustandsVector,deltaX,deltaY,deltaPhi,kovarianzMatrixDesZustandes,
                      kovarianzMatrixDesZustandUebergangs,
                      r_fakt,partLength,lx,ly,rx,ry,mx,my,1);
-
     createOutput();
     //destroy stuff
     emxDestroyArray_real_T(rx);
@@ -157,15 +154,19 @@ void EnvironmentPredictor::logStateVector()
 
 void EnvironmentPredictor::createOutput(){
     //create middle
+    logger.debug("createOutput");
     roadOutput->type(street_environment::RoadLaneType::MIDDLE);
-    convertZustandToLane(*roadOutput);
+    convertZustandToLane(*(roadOutput.get()));
     roadOutput->name("MIDDLE_LANE");
 }
 
 void EnvironmentPredictor::convertZustandToLane(street_environment::RoadLane &output){
     //clear points
+    logger.debug("convertZustandToLane ANFANG");
     output.points().clear();
+    logger.debug("convertZustandToLane ANFANG")<<1;
     output.polarDarstellung.clear();
+    logger.debug("convertZustandToLane CLEARED OLD VALS");
 
     lms::math::vertex2f p1;
     p1.x = 0;
@@ -189,10 +190,9 @@ void EnvironmentPredictor::convertZustandToLane(street_environment::RoadLane &ou
         pi.x = output.points()[i-1].x + partLength*cos(phi);
         pi.y = output.points()[i-1].y + partLength*sin(phi);
         output.points().push_back(pi);
-        logger.error("points: ")<<zustandsVector->data[i]/2<< " , "<<dw<<" , " <<pi.x << " , "<<pi.y;
+        logger.debug("points: ")<<"krümmung: "<<zustandsVector->data[i]<< " ,dw "<<dw<<" ,x:  " <<pi.x << " ,y: "<<pi.y;
         output.polarDarstellung.push_back(zustandsVector->data[i]);
     }
-    logger.error("PREDICTED")<<zustandsVector->data[2];
 
 }
 

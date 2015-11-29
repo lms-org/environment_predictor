@@ -20,14 +20,13 @@ public:
     bool cycle() override;
 private:
     void resetData();
-    const street_environment::EnvironmentObjects *envInput;
-    street_environment::RoadLane *roadOutput;
-    const sensor_utils::Car *car;
+    lms::ReadDataChannel<street_environment::EnvironmentObjects> envInput;
+    lms::WriteDataChannel<street_environment::RoadLane> roadOutput;
+    lms::ReadDataChannel<sensor_utils::Car> car;
 
     emxArray_real_T *zustandsVector;
     int partCount;
     double partLength;
-    const lms::type::ModuleConfig *config;
     void convertToKalmanArray(const street_environment::RoadLane &lane,emxArray_real_T **x,emxArray_real_T **y);
     void asEinheitsMatrix(emxArray_real_T *mat);
     void clearMatrix(emxArray_real_T *mat);

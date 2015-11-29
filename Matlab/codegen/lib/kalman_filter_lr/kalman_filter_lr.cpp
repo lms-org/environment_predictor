@@ -998,13 +998,13 @@ void kalman_filter_lr(emxArray_real_T *r, double delta_x, double delta_y, double
   i5 = r->size[0];
   for (i = 2; i - 2 < (int)((double)i5 + -2.0); i++) {
     if ((-0.75 >= r->data[i]) || rtIsNaN(r->data[i])) {
-      minval = -0.75;
+      //minval = -0.75;
     } else {
       minval = r->data[i];
     }
 
     if ((0.75 <= minval) || rtIsNaN(minval)) {
-      r->data[i] = 0.75;
+      //r->data[i] = 0.75;
     } else {
       r->data[i] = minval;
     }

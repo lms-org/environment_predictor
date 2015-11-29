@@ -10,10 +10,10 @@
 
 #include "kalman_filter_lr.h"
 bool EnvironmentPredictor::initialize() {
-    envInput = datamanager()->readChannel<street_environment::EnvironmentObjects>(this,"ENVIRONMENT_INPUT");
+    envInput = readChannel<street_environment::EnvironmentObjects>("ENVIRONMENT_INPUT");
 
-    roadOutput = datamanager()->writeChannel<street_environment::RoadLane>(this,"ROAD_OUTPUT");
-    car = datamanager()->readChannel<sensor_utils::Car>(this,"CAR");
+    roadOutput = writeChannel<street_environment::RoadLane>("ROAD_OUTPUT");
+    car = readChannel<sensor_utils::Car>("CAR");
 
     partCount = config().get<int>("elementCount",10);
     partLength = config().get<float>("elementLength",0.2);
@@ -119,9 +119,10 @@ bool EnvironmentPredictor::cycle() {
         deltaPhi = car->deltaPhi();
     }
     */
+    float prior_fact = config().get<float>("prior_fact",0);
     kalman_filter_lr(zustandsVector,deltaX,deltaY,deltaPhi,kovarianzMatrixDesZustandes,
                      kovarianzMatrixDesZustandUebergangs,
-                     r_fakt,partLength,lx,ly,rx,ry,mx,my,1);
+                     r_fakt,partLength,lx,ly,rx,ry,mx,my,1,prior_fact);
     createOutput();
     //destroy stuff
     emxDestroyArray_real_T(rx);

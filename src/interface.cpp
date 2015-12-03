@@ -1,7 +1,3 @@
 #include <environment_predictor.h>
 
-extern "C" {
-void* getInstance () {
-    return new EnvironmentPredictor();
-}
-}
+LMS_MODULE_INTERFACE(EnvironmentPredictor)

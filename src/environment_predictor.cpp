@@ -39,13 +39,14 @@ void EnvironmentPredictor::resetData(){
     logger.error("resetData");
     clearMatrix(zustandsVector);
     zustandsVector->data[0] = config().get<float>("distanceToMiddle",0.2);
-    asEinheitsMatrix(stateTransitionMatrix);
-    asEinheitsMatrix(kovarianzMatrixDesZustandes);
-    clearMatrix(kovarianzMatrixDesZustandUebergangs);
+    asEinheitsMatrix(stateTransitionMatrix, 1);
+    asEinheitsMatrix(kovarianzMatrixDesZustandes, 1);
+    asEinheitsMatrix(kovarianzMatrixDesZustandUebergangs, config().get<float>("kov",15));
+    //clearMatrix(kovarianzMatrixDesZustandUebergangs);
 
     for(int x = 0; x < partCount; x++){
         for(int y = 0; y < partCount; y++){
-            kovarianzMatrixDesZustandUebergangs->data[y*partCount+x]=config().get<float>("kov",15)*(1-pow(config().get<float>("kovAbnahme",0.2),1/fabs(x-y)));
+            if (x != 0 && y != 0) kovarianzMatrixDesZustandUebergangs->data[y*partCount+x]=config().get<float>("kov",15)*(1-pow(config().get<float>("kovAbnahme",0.2),1/fabs(x-y)));
         }
     }
 }
@@ -119,7 +120,7 @@ bool EnvironmentPredictor::cycle() {
         deltaPhi = car->deltaPhi();
     }
     */
-    float prior_fact = config().get<float>("prior_fact",0);
+    float prior_fact = 0; //config().get<float>("prior_fact",0);
     kalman_filter_lr(zustandsVector,deltaX,deltaY,deltaPhi,kovarianzMatrixDesZustandes,
                      kovarianzMatrixDesZustandUebergangs,
                      r_fakt,partLength,lx,ly,rx,ry,mx,my,1,prior_fact);
@@ -135,6 +136,8 @@ bool EnvironmentPredictor::cycle() {
     logStateVector();
     
     cycleCounter++;
+
+    //getchar();
     
     return true;
 }
@@ -202,10 +205,10 @@ void EnvironmentPredictor::clearMatrix(emxArray_real_T *mat){
 
 }
 
-void EnvironmentPredictor::asEinheitsMatrix(emxArray_real_T *mat){
+void EnvironmentPredictor::asEinheitsMatrix(emxArray_real_T *mat, double val){
     clearMatrix(mat);
     for(int i = 0; i < mat->size[0]; i++){
-        mat->data[i*(mat->size[0]+1)] = 1;
+        mat->data[i*(mat->size[0]+1)] = val;
     }
 }
 

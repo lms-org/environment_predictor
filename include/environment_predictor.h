@@ -28,7 +28,7 @@ private:
     int partCount;
     double partLength;
     void convertToKalmanArray(const street_environment::RoadLane &lane,emxArray_real_T **x,emxArray_real_T **y);
-    void asEinheitsMatrix(emxArray_real_T *mat);
+    void asEinheitsMatrix(emxArray_real_T *mat, double val);
     void clearMatrix(emxArray_real_T *mat);
     emxArray_real_T *stateTransitionMatrix;
 

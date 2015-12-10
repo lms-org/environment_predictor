@@ -7,6 +7,7 @@
 #include "lms/imaging/warp.h"
 #include "street_environment/road.h"
 #include "cmath"
+#include "phoenix_CC2016_service/phoenix_CC2016_service.h"
 
 #include "kalman_filter_lr.h"
 bool EnvironmentPredictor::initialize() {
@@ -58,9 +59,8 @@ bool EnvironmentPredictor::deinitialize() {
 bool EnvironmentPredictor::cycle() {
 
     //I don't like it hmmm
-    for(std::string content : messaging()->receive("RC_STATE_CHANGED")){
+    if(getService<phoenix_CC2016_service::Phoenix_CC2016Service>("PHOENIX_SERVICE")->rcStateChanged()){
         resetData();
-        logger.info("cycle")<<"RC_STATE_CHANGED";
     }
 
     r_fakt=config().get<double>("r_fakt",20);

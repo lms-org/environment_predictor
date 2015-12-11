@@ -23,8 +23,7 @@ bool EnvironmentPredictor::initialize() {
     kovarianzMatrixDesZustandes = emxCreate_real_T(partCount,partCount);
     kovarianzMatrixDesZustandUebergangs = emxCreate_real_T(partCount,partCount);
     cycleCounter = 0;
-    if(config().get<bool>("logState", false))
-    {
+    if(config().get<bool>("logState", false)){
         logFile.open(config().get<std::string>("logPrefix") + "_" + lms::currentTimeString() + "_kalman.csv", std::ofstream::out);
     }
     

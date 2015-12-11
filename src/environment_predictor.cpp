@@ -1,7 +1,6 @@
 #include <string>
 
 #include "environment_predictor.h"
-#include "lms/datamanager.h"
 #include "lms/imaging/converter.h"
 #include <lms/imaging/image_factory.h>
 #include "lms/imaging/warp.h"
@@ -26,7 +25,7 @@ bool EnvironmentPredictor::initialize() {
     cycleCounter = 0;
     if(config().get<bool>("logState", false))
     {
-        logFile.open(config().get<std::string>("logPrefix") + "_" + lms::extra::currentTimeString() + "_kalman.csv", std::ofstream::out);
+        logFile.open(config().get<std::string>("logPrefix") + "_" + lms::currentTimeString() + "_kalman.csv", std::ofstream::out);
     }
     
     resetData();

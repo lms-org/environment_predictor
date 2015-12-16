@@ -35,7 +35,7 @@ bool EnvironmentPredictor::initialize() {
 }
 
 void EnvironmentPredictor::resetData(){
-    logger.error("resetData");
+    logger.info("resetData");
     clearMatrix(zustandsVector);
     zustandsVector->data[0] = config().get<float>("distanceToMiddle",0.2);
     asEinheitsMatrix(stateTransitionMatrix, 1);

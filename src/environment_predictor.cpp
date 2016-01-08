@@ -118,7 +118,11 @@ bool EnvironmentPredictor::cycle() {
         deltaPhi = car->deltaPhi();
     }
     */
-    float prior_fact = 0; //config().get<float>("prior_fact",0);
+    float prior_fact = config().get<float>("prior_fact",0);
+    if(car->getPrioState().state == sensor_utils::Car::StateType::IDLE){
+        //Auto steht an kreuzung, wir gehen davon aus, dass die Straße im Nahbereich gerade ist
+        prior_fact = config().get<float>("idle_prior_fact",1);
+    }
     kalman_filter_lr(zustandsVector,deltaX,deltaY,deltaPhi,kovarianzMatrixDesZustandes,
                      kovarianzMatrixDesZustandUebergangs,
                      r_fakt,partLength,lx,ly,rx,ry,mx,my,1,prior_fact);

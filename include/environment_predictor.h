@@ -23,26 +23,7 @@ private:
     lms::ReadDataChannel<street_environment::EnvironmentObjects> envInput;
     lms::WriteDataChannel<street_environment::RoadLane> roadOutput;
     lms::ReadDataChannel<sensor_utils::Car> car;
-
-    emxArray_real_T *zustandsVector;
-    int partCount;
-    double partLength;
-    void convertToKalmanArray(const street_environment::RoadLane &lane,emxArray_real_T **x,emxArray_real_T **y);
-    void asEinheitsMatrix(emxArray_real_T *mat, double val);
-    void clearMatrix(emxArray_real_T *mat);
-    emxArray_real_T *stateTransitionMatrix;
-
-    emxArray_real_T *kovarianzMatrixDesZustandes;
-    emxArray_real_T *kovarianzMatrixDesZustandUebergangs;
-    double r_fakt; //messgenauigkeit
-    void createOutput();
-    void convertZustandToLane(street_environment::RoadLane &output);
-
-    void printMat(emxArray_real_T *mat);
-    void logStateVector();
-    
-    std::ofstream logFile;
-    size_t cycleCounter;
+    lms::WriteDataChannel<lms::math::polyLine2f> debugPoints;
 };
 
 #endif /* IMAGE_CONVERTER_H */

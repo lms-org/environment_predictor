@@ -8,10 +8,7 @@ set (HEADERS
 	${HEADERS_SHARED}
 )
 
-set(KALMAN "Matlab/codegen/lib/kalman_filter_lr")
 include_directories("include")
-include_directories("${KALMAN}")
-file(GLOB kalman "${KALMAN}/*.cpp" "${KALMAN}/*.h")
-add_library ( environment_predictor MODULE ${SOURCES} ${HEADERS} ${kalman})
+add_library ( environment_predictor MODULE ${SOURCES} ${HEADERS})
 target_link_libraries(environment_predictor PRIVATE lmscore imaging imaging_detection sensor_utils phoenix_CC2016_service local_course)
 

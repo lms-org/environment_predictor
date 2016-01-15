@@ -10,7 +10,6 @@
 #include "phoenix_CC2016_service/phoenix_CC2016_service.h"
 #include "local_course/local_course.h"
 
-#include "kalman_filter_lr.h"
 bool EnvironmentPredictor::initialize() {
     envInput = readChannel<street_environment::EnvironmentObjects>("ENVIRONMENT_INPUT");
 

@@ -40,13 +40,13 @@ bool EnvironmentPredictor::cycle() {
         if(rl.points().size() == 0)
             continue;
         if(rl.type() == street_environment::RoadLaneType::LEFT){
-            logger.error("cycle") << "found left lane: " << rl.points().size();
+            logger.debug("cycle") << "found left lane: " << rl.points().size();
             localCourse->addPoints(rl.moveOrthogonal(0.4).points());
         }else if(rl.type() == street_environment::RoadLaneType::RIGHT){
-            logger.error("cycle") << "found right lane: " << rl.points().size();
+            logger.debug("cycle") << "found right lane: " << rl.points().size();
             localCourse->addPoints(rl.moveOrthogonal(-0.4).points());
         }else if(rl.type() == street_environment::RoadLaneType::MIDDLE){
-            logger.error("cycle") << "found middle lane: " << rl.points().size();
+            logger.debug("cycle") << "found middle lane: " << rl.points().size();
             localCourse->addPoints(rl.points());
         }
     }

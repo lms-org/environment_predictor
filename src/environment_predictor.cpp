@@ -55,7 +55,7 @@ bool EnvironmentPredictor::cycle() {
     //TODO
     //logger.info("translation")<<car->deltaX()<<" "<<car->deltaY()<<" "<<car->deltaPhi();;
     //localCourse->update(car->deltaX(),car->deltaY(),car->deltaPhi());
-    localCourse->update(0,0,0);
+    localCourse->update(car->localDx(),car->localDy(),car->deltaPhi());
     *roadOutput = localCourse->getCourse();
     roadOutput->type(street_environment::RoadLaneType::MIDDLE);
     return true;

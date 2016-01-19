@@ -53,9 +53,8 @@ bool EnvironmentPredictor::cycle() {
 
     debugPoints->points() = localCourse->getPointsToAdd();
     //TODO
-    //logger.info("translation")<<car->deltaX()<<" "<<car->deltaY()<<" "<<car->deltaPhi();;
-    //localCourse->update(car->deltaX(),car->deltaY(),car->deltaPhi());
-    localCourse->update(car->localDx(),car->localDy(),car->deltaPhi());
+    //logger.info("translation")<<<<car->localDeltaPosition()<<" "<<car->deltaPhi();
+    localCourse->update(car->localDeltaPosition().x,car->localDeltaPosition().y,car->deltaPhi());
     *roadOutput = localCourse->getCourse();
     roadOutput->type(street_environment::RoadLaneType::MIDDLE);
     return true;

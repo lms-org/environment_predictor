@@ -30,36 +30,38 @@ bool EnvironmentPredictor::cycle() {
     if(getService<phoenix_CC2016_service::Phoenix_CC2016Service>("PHOENIX_SERVICE")->rcStateChanged()){
         localCourse->resetData();
         logger.error("reset kalman");
+        debugPoints->points().clear();
         return true;
-    }
-    //Add new points
-    for(const std::shared_ptr<const street_environment::EnvironmentObject> obj :envInput->objects){
-        if(obj->name().find("LANE") == std::string::npos){
-            //no valid lane, some other env object!
-            continue;
-        }
-        const street_environment::RoadLane &rl = obj->getAsReference<const street_environment::RoadLane>();
-        if(rl.points().size() == 0)
-            continue;
-        if(rl.type() == street_environment::RoadLaneType::LEFT){
-            logger.debug("cycle") << "found left lane: " << rl.points().size();
-            localCourse->addPoints(rl.moveOrthogonal(0.4).points());
-        }else if(rl.type() == street_environment::RoadLaneType::RIGHT){
-            logger.debug("cycle") << "found right lane: " << rl.points().size();
-            localCourse->addPoints(rl.moveOrthogonal(-0.4).points());
-        }else if(rl.type() == street_environment::RoadLaneType::MIDDLE){
-            logger.debug("cycle") << "found middle lane: " << rl.points().size();
-            localCourse->addPoints(rl.points());
-        }
-    }
-
-    debugPoints->points() = localCourse->getPointsToAdd();
-    //TODO
-    //logger.info("translation")<<<<car->localDeltaPosition()<<" "<<car->deltaPhi();
-    if(config().get<bool>("translateEnvironment",false)){
-    localCourse->update(car->localDeltaPosition().x,car->localDeltaPosition().y,car->deltaPhi());
     }else{
-        localCourse->update(0,0,0);
+        //Add new points
+        for(const std::shared_ptr<const street_environment::EnvironmentObject> obj :envInput->objects){
+            if(obj->name().find("LANE") == std::string::npos){
+                //no valid lane, some other env object!
+                continue;
+            }
+            const street_environment::RoadLane &rl = obj->getAsReference<const street_environment::RoadLane>();
+            if(rl.points().size() == 0)
+                continue;
+            if(rl.type() == street_environment::RoadLaneType::LEFT){
+                logger.debug("cycle") << "found left lane: " << rl.points().size();
+                localCourse->addPoints(rl.moveOrthogonal(0.4).points());
+            }else if(rl.type() == street_environment::RoadLaneType::RIGHT){
+                logger.debug("cycle") << "found right lane: " << rl.points().size();
+                localCourse->addPoints(rl.moveOrthogonal(-0.4).points());
+            }else if(rl.type() == street_environment::RoadLaneType::MIDDLE){
+                logger.debug("cycle") << "found middle lane: " << rl.points().size();
+                localCourse->addPoints(rl.points());
+            }
+        }
+
+        debugPoints->points() = localCourse->getPointsToAdd();
+        //TODO
+        //logger.info("translation")<<<<car->localDeltaPosition()<<" "<<car->deltaPhi();
+        if(config().get<bool>("translateEnvironment",false)){
+        localCourse->update(car->localDeltaPosition().x,car->localDeltaPosition().y,car->deltaPhi());
+        }else{
+            localCourse->update(0,0,0);
+        }
     }
     *roadOutput = localCourse->getCourse();
     roadOutput->type(street_environment::RoadLaneType::MIDDLE);

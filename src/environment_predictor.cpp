@@ -31,7 +31,6 @@ bool EnvironmentPredictor::cycle() {
         localCourse->resetData();
         logger.error("reset kalman");
         debugPoints->points().clear();
-        return true;
     }else{
         //Add new points
         for(const std::shared_ptr<const street_environment::EnvironmentObject> obj :envInput->objects){

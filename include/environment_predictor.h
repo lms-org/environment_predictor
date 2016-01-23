@@ -5,7 +5,7 @@
 #include "lms/imaging/image.h"
 #include "lms/imaging/format.h"
 #include "street_environment/road.h"
-#include "lms/type/module_config.h"
+#include "lms/config.h"
 #include "sensor_utils/car.h"
 #include <fstream>
 

@@ -33,23 +33,23 @@ bool EnvironmentPredictor::cycle() {
         debugPoints->points().clear();
     }else{
         //Add new points
-        for(const std::shared_ptr<const street_environment::EnvironmentObject> obj :envInput->objects){
+        for(const street_environment::EnvironmentObjectPtr obj :envInput->objects){
             if(obj->name().find("LANE") == std::string::npos){
                 //no valid lane, some other env object!
                 continue;
             }
-            const street_environment::RoadLane &rl = obj->getAsReference<const street_environment::RoadLane>();
-            if(rl.points().size() == 0)
+            const street_environment::RoadLanePtr rl = std::static_pointer_cast<street_environment::RoadLane>(obj);
+            if(rl->points().size() == 0)
                 continue;
-            if(rl.type() == street_environment::RoadLaneType::LEFT){
-                logger.debug("cycle") << "found left lane: " << rl.points().size();
-                localCourse->addPoints(rl.moveOrthogonal(0.4).points());
-            }else if(rl.type() == street_environment::RoadLaneType::RIGHT){
-                logger.debug("cycle") << "found right lane: " << rl.points().size();
-                localCourse->addPoints(rl.moveOrthogonal(-0.4).points());
-            }else if(rl.type() == street_environment::RoadLaneType::MIDDLE){
-                logger.debug("cycle") << "found middle lane: " << rl.points().size();
-                localCourse->addPoints(rl.points());
+            if(rl->type() == street_environment::RoadLaneType::LEFT){
+                logger.debug("cycle") << "found left lane: " << rl->points().size();
+                localCourse->addPoints(rl->moveOrthogonal(0.4).points());
+            }else if(rl->type() == street_environment::RoadLaneType::RIGHT){
+                logger.debug("cycle") << "found right lane: " << rl->points().size();
+                localCourse->addPoints(rl->moveOrthogonal(-0.4).points());
+            }else if(rl->type() == street_environment::RoadLaneType::MIDDLE){
+                logger.debug("cycle") << "found middle lane: " << rl->points().size();
+                localCourse->addPoints(rl->points());
             }
         }
 
@@ -57,7 +57,7 @@ bool EnvironmentPredictor::cycle() {
         //TODO
         //logger.info("translation")<<<<car->localDeltaPosition()<<" "<<car->deltaPhi();
         if(config().get<bool>("translateEnvironment",false)){
-        localCourse->update(car->localDeltaPosition().x,car->localDeltaPosition().y,car->deltaPhi());
+            localCourse->update(car->localDeltaPosition().x,car->localDeltaPosition().y,car->deltaPhi());
         }else{
             localCourse->update(0,0,0);
         }

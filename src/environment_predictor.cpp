@@ -60,8 +60,8 @@ bool EnvironmentPredictor::cycle() {
         float velocity_max = config().get<float>("r_fakt_maxVelocity", 4.0);;
         float r_fakt = std::max(static_cast<double>(r_fakt_min), r_fakt_max - fabs(car->velocity())*(r_fakt_max - r_fakt_min)/velocity_max);
         //TODO
-        //logger.info("translation")<<car->localDeltaPosition()<<" "<<car->deltaPhi();
         if(config().get<bool>("translateEnvironment",false)){
+            logger.info("translation")<<car->deltaPhi();
             //localCourse->update(car->localDeltaPosition().x,car->localDeltaPosition().y,car->deltaPhi()); //TODO x and y translation produce bad results
             localCourse->update(0.0,0.0,car->deltaPhi(), r_fakt);
         }else{

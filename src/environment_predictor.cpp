@@ -15,6 +15,7 @@ bool EnvironmentPredictor::initialize() {
 
     roadOutput = writeChannel<street_environment::RoadLane>("ROAD_OUTPUT");
     debugPoints = writeChannel<lms::math::polyLine2f>("DEBUG_POINTS");
+    debugPointsRaw = writeChannel<lms::math::polyLine2f>("DEBUG_POINTS_RAW");
     car = readChannel<sensor_utils::Car>("CAR");
     return true;
 }
@@ -53,7 +54,9 @@ bool EnvironmentPredictor::cycle() {
             }
         }
 
-        debugPoints->points() = localCourse->getPointsToAdd();
+        debugPointsRaw->points()=  localCourse->getPointsToAdd();
+
+
 
         float r_fakt_min = config().get<float>("r_fakt_min", 15);
         float r_fakt_max = config().get<float>("r_fakt_max", 150);
@@ -63,13 +66,21 @@ bool EnvironmentPredictor::cycle() {
         if(config().get<bool>("translateEnvironment",false)){
             logger.info("translation")<<car->deltaPhi();
             //localCourse->update(car->localDeltaPosition().x,car->localDeltaPosition().y,car->deltaPhi()); //TODO x and y translation produce bad results
-            localCourse->update(0.0,0.0,car->deltaPhi(), r_fakt);
+            double maxYawRate = 0.03;
+            double deltaPhi = car->deltaPhi();
+            logger.error("deltaPhi") << deltaPhi;
+            if (deltaPhi < -maxYawRate) deltaPhi = -maxYawRate;
+            else if (deltaPhi > maxYawRate) deltaPhi = maxYawRate;
+            localCourse->update(0.0,0.0,deltaPhi, r_fakt);
         }else{
             localCourse->update(0,0,0, r_fakt);
         }
     }
     *roadOutput = localCourse->getCourse();
     roadOutput->type(street_environment::RoadLaneType::MIDDLE);
+
+    debugPoints->points() = localCourse->getPointsAdded();
+
     return true;
 }
 

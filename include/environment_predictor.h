@@ -22,6 +22,7 @@ private:
     lms::WriteDataChannel<street_environment::RoadLane> roadOutput;
     lms::ReadDataChannel<sensor_utils::Car> car;
     lms::WriteDataChannel<lms::math::polyLine2f> debugPoints;
+    lms::WriteDataChannel<lms::math::polyLine2f> debugPointsRaw;
 };
 
 #endif /* IMAGE_CONVERTER_H */

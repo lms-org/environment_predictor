@@ -29,6 +29,7 @@ bool EnvironmentPredictor::cycle() {
 
     lms::ServiceHandle<local_course::LocalCourse> localCourse = getService<local_course::LocalCourse>("LOCAL_COURSE_SERVICE");
     if(getService<phoenix_CC2016_service::Phoenix_CC2016Service>("PHOENIX_SERVICE")->rcStateChanged()){
+        getService<phoenix_CC2016_service::Phoenix_CC2016Service>("PHOENIX_SERVICE")->logRcStates();
         localCourse->resetData();
         logger.error("reset kalman");
         debugPoints->points().clear();

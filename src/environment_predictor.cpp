@@ -59,6 +59,12 @@ bool EnvironmentPredictor::cycle() {
         debugPointsRaw->points()=  localCourse->getPointsToAdd();
 
 
+        float priorFactor = 0.0;
+
+        if((phoenixService->driveMode() == phoenix_CC2016_service::CCDriveMode::PARKING)){
+            priorFactor = 100.0;
+        }
+
 
         float r_fakt_min = config().get<float>("r_fakt_min", 15);
         float r_fakt_max = config().get<float>("r_fakt_max", 150);
@@ -73,9 +79,9 @@ bool EnvironmentPredictor::cycle() {
             logger.error("deltaPhi") << deltaPhi;
             if (deltaPhi < -maxYawRate) deltaPhi = -maxYawRate;
             else if (deltaPhi > maxYawRate) deltaPhi = maxYawRate;
-            localCourse->update(0.0,0.0,deltaPhi, r_fakt);
+            localCourse->update(0.0,0.0,deltaPhi, r_fakt, priorFactor);
         }else{
-            localCourse->update(0,0,0, r_fakt);
+            localCourse->update(0,0,0, r_fakt, priorFactor);
         }
     }
     *roadOutput = localCourse->getCourse();

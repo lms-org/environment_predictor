@@ -16,7 +16,7 @@ bool EnvironmentPredictor::initialize() {
     roadOutput = writeChannel<street_environment::RoadLane>("ROAD_OUTPUT");
     debugPoints = writeChannel<lms::math::polyLine2f>("DEBUG_POINTS");
     debugPointsRaw = writeChannel<lms::math::polyLine2f>("DEBUG_POINTS_RAW");
-    car = readChannel<sensor_utils::Car>("CAR");
+    car = readChannel<street_environment::Car>("CAR");
     return true;
 }
 

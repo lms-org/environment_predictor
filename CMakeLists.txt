@@ -10,5 +10,5 @@ set (HEADERS
 
 include_directories("include")
 add_library ( environment_predictor MODULE ${SOURCES} ${HEADERS})
-target_link_libraries(environment_predictor PRIVATE lmscore imaging street_environment lms_sensor_utils phoenix_CC2016_service local_course)
+target_link_libraries(environment_predictor PRIVATE lmscore lms_imaging street_environment lms_sensor_utils phoenix_CC2016_service local_course)
 

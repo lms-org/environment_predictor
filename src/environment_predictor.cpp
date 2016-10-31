@@ -26,8 +26,9 @@ bool EnvironmentPredictor::deinitialize() {
 
 bool EnvironmentPredictor::cycle() {
 
-
     lms::ServiceHandle<local_course::LocalCourse> localCourse = getService<local_course::LocalCourse>("LOCAL_COURSE_SERVICE");
+
+    //check if we need to reset the environment
     lms::ServiceHandle<phoenix_CC2016_service::Phoenix_CC2016Service> phoenixService = getService<phoenix_CC2016_service::Phoenix_CC2016Service>("PHOENIX_SERVICE");
     if(phoenixService->rcStateChanged() || phoenixService->driveModeChanged()){
         //phoenixService->logRcStates();
@@ -35,12 +36,13 @@ bool EnvironmentPredictor::cycle() {
         logger.error("reset kalman");
         debugPoints->points().clear();
     }else{
-        //Add new points
+        //update the service with new points
         for(const street_environment::EnvironmentObjectPtr obj :envInput->objects){
             if(obj->name().find("LANE") == std::string::npos){
                 //no valid lane, some other env object!
                 continue;
             }
+            //add the lines and translate them if necessary
             const street_environment::RoadLanePtr rl = std::static_pointer_cast<street_environment::RoadLane>(obj);
             if(rl->points().size() == 0)
                 continue;
@@ -55,35 +57,26 @@ bool EnvironmentPredictor::cycle() {
                 localCourse->addPoints(rl->points());
             }
         }
-
+        //get used points by the localCourse for debugging
         debugPointsRaw->points()=  localCourse->getPointsToAdd();
-
-
-        float priorFactor = 0.0;
-
-        if((phoenixService->driveMode() == phoenix_CC2016_service::CCDriveMode::PARKING)){
-            priorFactor = 100.0;
-        }
-
-
-        float r_fakt_min = config().get<float>("r_fakt_min", 15);
-        float r_fakt_max = config().get<float>("r_fakt_max", 150);
-        float velocity_max = config().get<float>("r_fakt_maxVelocity", 4.0);;
-        float r_fakt = std::max(static_cast<double>(r_fakt_min), r_fakt_max - fabs(car->velocity())*(r_fakt_max - r_fakt_min)/velocity_max);
-        //TODO
+        //update the environment
         if(config().get<bool>("translateEnvironment",false)){
             logger.info("translation")<<car->deltaPhi();
             //localCourse->update(car->localDeltaPosition().x,car->localDeltaPosition().y,car->deltaPhi()); //TODO x and y translation produce bad results
             double maxYawRate = 0.03;
             double deltaPhi = car->deltaPhi();
+            //TODO is there still a fail?
             logger.error("deltaPhi") << deltaPhi;
-            if (deltaPhi < -maxYawRate) deltaPhi = -maxYawRate;
-            else if (deltaPhi > maxYawRate) deltaPhi = maxYawRate;
-            localCourse->update(0.0,0.0,deltaPhi, r_fakt, priorFactor);
+            if (deltaPhi < -maxYawRate)
+                deltaPhi = -maxYawRate;
+            else if (deltaPhi > maxYawRate)
+                deltaPhi = maxYawRate;
+            localCourse->update(0,0,deltaPhi);
         }else{
-            localCourse->update(0,0,0, r_fakt, priorFactor);
+            localCourse->update(0,0,0);
         }
     }
+    //create data-output
     *roadOutput = localCourse->getCourse();
     roadOutput->type(street_environment::RoadLaneType::MIDDLE);
 

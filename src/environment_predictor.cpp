@@ -77,8 +77,22 @@ bool EnvironmentPredictor::cycle() {
         }
     }
     //create data-output
-    *roadOutput = localCourse->getCourse();
+    street_environment::RoadLane out = localCourse->getCourse();
+    bool valid = true;
+    for(const lms::math::vertex2f &v:out.points()){
+        if(std::isnan(v.x) || std::isnan(v.y)){
+            logger.error("cycle")<<"localcourse returned invalid road, element is nan!";
+            valid = false;
+        }
+    }
+    if(valid){
+        *roadOutput = out;
+        logger.error("cycle")<<"using old roadOutput as new one is invalid!";
+    }else{
+        //TODO error handling!
+    }
     roadOutput->type(street_environment::RoadLaneType::MIDDLE);
+
 
     debugPoints->points() = localCourse->getPointsAdded();
 

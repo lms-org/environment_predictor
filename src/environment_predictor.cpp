@@ -91,8 +91,8 @@ bool EnvironmentPredictor::cycle() {
     }
     if(valid){
         *roadOutput = out;
-        logger.error("cycle")<<"using old roadOutput as new one is invalid!";
     }else{
+        logger.error("cycle")<<"using old roadOutput as new one is invalid!";
         //TODO error handling!
     }
     roadOutput->type(street_environment::RoadLaneType::MIDDLE);

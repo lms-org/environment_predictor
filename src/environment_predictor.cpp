@@ -71,9 +71,13 @@ bool EnvironmentPredictor::cycle() {
                 deltaPhi = -maxYawRate;
             else if (deltaPhi > maxYawRate)
                 deltaPhi = maxYawRate;
+            logger.time("localCourse");
             localCourse->update(0,0,deltaPhi);
+            logger.timeEnd("localCourse");
         }else{
+            logger.time("localCourse");
             localCourse->update(0,0,0);
+            logger.timeEnd("localCourse");
         }
     }
     //create data-output

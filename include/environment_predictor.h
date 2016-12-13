@@ -20,7 +20,7 @@ private:
     void resetData();
     lms::ReadDataChannel<street_environment::EnvironmentObjects> envInput;
     lms::WriteDataChannel<street_environment::RoadLane> roadOutput;
-    lms::ReadDataChannel<street_environment::Car> car;
+    lms::ReadDataChannel<street_environment::CarCommand> car;
     lms::WriteDataChannel<lms::math::polyLine2f> debugPoints;
     lms::WriteDataChannel<lms::math::polyLine2f> debugPointsRaw;
 };
